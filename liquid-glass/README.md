@@ -4,7 +4,7 @@
 - SVG filters
 - It's more about animations and flow
 
-[▶️ Watch the demo](./demo.mov)
+<video src="./demo.mp4" controls width="600"></video>
 
 ### SVG Filters
 
