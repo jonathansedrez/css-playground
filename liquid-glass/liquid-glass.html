@@ -13,7 +13,129 @@
     </header>
 
     <main>
-      <div class="box"></div>
+      <div class="wrapper">
+        <!-- Only CSS 👇 -->
+        <div class="box-css-only"></div>
+
+        <!-- SVG filter 👇 -->
+        <div class="svg-liquid-glass-wrapper">
+          <div class="svg-liquid-glass-effect"></div>
+          <div class="svg-liquid-glass-content"></div>
+        </div>
+
+        <!-- Another SVG filter 👇 -->
+        <div class="another-svg-liquid-glass-wrapper"></div>
+
+        <!-- LLM 👇 -->
+        <div class="llm"></div>
+      </div>
+
+      <!-- SVG filter 👇 -->
+      <svg style="display: none">
+        <filter id="glass-effect">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.01 0.01"
+            numOctaves="1"
+            seed="5"
+            result="turbulence"
+          />
+          <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+          <feDisplacementMap in="SourceGraphic" in2="softMap" scale="150" />
+        </filter>
+      </svg>
+
+      <!-- Another SVG filter 👇 -->
+      <svg style="display: none">
+        <filter
+          id="glass-distortion"
+          x="0%"
+          y="0%"
+          width="100%"
+          height="100%"
+          filterUnits="objectBoundingBox"
+        >
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.01 0.01"
+            numOctaves="1"
+            seed="5"
+            result="turbulence"
+          />
+          <!-- Seeds: 14, 17,  -->
+
+          <feComponentTransfer in="turbulence" result="mapped">
+            <feFuncR type="gamma" amplitude="1" exponent="10" offset="0.5" />
+            <feFuncG type="gamma" amplitude="0" exponent="1" offset="0" />
+            <feFuncB type="gamma" amplitude="0" exponent="1" offset="0.5" />
+          </feComponentTransfer>
+
+          <feGaussianBlur in="turbulence" stdDeviation="3" result="softMap" />
+
+          <feSpecularLighting
+            in="softMap"
+            surfaceScale="5"
+            specularConstant="1"
+            specularExponent="100"
+            lighting-color="white"
+            result="specLight"
+          >
+            <fePointLight x="-200" y="-200" z="300" />
+          </feSpecularLighting>
+
+          <feComposite
+            in="specLight"
+            operator="arithmetic"
+            k1="0"
+            k2="1"
+            k3="1"
+            k4="0"
+            result="litImage"
+          />
+
+          <feDisplacementMap
+            in="SourceGraphic"
+            in2="softMap"
+            scale="150"
+            xChannelSelector="R"
+            yChannelSelector="G"
+          />
+        </filter>
+      </svg>
+
+      <!-- LLM 👇 -->
+      <svg width="0" height="0" style="position: absolute">
+        <defs>
+          <filter
+            id="frosted-glass"
+            x="-20%"
+            y="-20%"
+            width="140%"
+            height="140%"
+          >
+            <!-- 1. Blur the backdrop -->
+            <feGaussianBlur
+              in="SourceGraphic"
+              stdDeviation="8"
+              result="blurred"
+            />
+            <!-- 2. Increase contrast/lightness a bit -->
+            <feColorMatrix
+              in="blurred"
+              type="matrix"
+              values="
+            1.2 0   0   0   0
+            0   1.2 0   0   0
+            0   0   1.2 0   0
+            0   0   0   1   0
+          "
+              result="brightened"
+            />
+            <!-- 3. Blend the original on top for a subtle clarity -->
+            <feBlend in="SourceGraphic" in2="brightened" mode="screen" />
+          </filter>
+        </defs>
+      </svg>
 
       <img
         src="https://plus.unsplash.com/premium_photo-1661322640130-f6a1e2c36653?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"

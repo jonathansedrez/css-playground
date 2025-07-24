@@ -1,13 +1,64 @@
-.box {
-  width: 400px;
-  height: 200px;
-  border-radius: 20px;
-  background: white;
-  position: fixed;
-  top: 20px;
-  left: calc(50% - 200px);
+img {
+  width: 100%;
+}
 
-  /* glass effect 👇 */
+.wrapper {
+  display: flex;
+  gap: 32px;
+  position: fixed;
+  top: 50vh;
+  width: 100%;
+  padding: 0 40px;
+}
+
+/* Only CSS 👇 */
+.box-css-only {
+  flex-grow: 1;
+  height: 50px;
+  border-radius: 40px;
+  background: white;
+
   opacity: 0.6;
   backdrop-filter: blur(5px);
+
+  border: 1px solid white;
+  box-shadow: inset 5em 1em rgba(255, 255, 255, 0.3);
+}
+
+/* SVG filter 👇 */
+.svg-liquid-glass-wrapper {
+  flex-grow: 1;
+  height: 50px;
+
+  background: white;
+  opacity: 0.5;
+  overflow: hidden;
+  border-radius: 40px;
+}
+
+.svg-liquid-glass-effect {
+  inset: 0;
+  backdrop-filter: blur(3px);
+  overflow: hidden;
+  filter: url(#glass-effect);
+}
+
+/* Another SVG filter 👇 */
+.another-svg-liquid-glass-wrapper {
+  flex-grow: 1;
+  height: 50px;
+  border-radius: 40px;
+  backdrop-filter: blur(3px);
+  filter: url(#glass-distortion);
+}
+
+/* LLM 👇 */
+.llm {
+  flex-grow: 1;
+  height: 50px;
+  border-radius: 40px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  /* apply our SVG filter by ID */
+  filter: url(#frosted-glass);
 }
